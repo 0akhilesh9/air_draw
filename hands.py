@@ -75,7 +75,7 @@ def paint():
                     cropped_img = annotated_image[rect_top_y : (rect_top_y+(rect_bottom_y-rect_top_y)), rect_left_x : (rect_left_x+(rect_right_x-rect_left_x))]
                     thresholded, bkg_img, num_frames = gesture.get_gesture(cropped_img, bkg_img, num_frames)
                     print(num_frames)
-                    if thresholded != None:
+                    if len(thresholded) > 0:
                         cv2.imshow("a", thresholded)
 
                     else:

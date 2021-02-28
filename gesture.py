@@ -51,7 +51,7 @@ def segment(image, bg, threshold=25):
 def get_gesture(roi, bg, num_frames):
     gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
     gray = cv2.GaussianBlur(gray, kernel_size, 0)
-    thresholded = None
+    thresholded = []
 
     # to get the background, keep looking till a threshold is reached
     # so that our running average model gets calibrated
@@ -59,6 +59,7 @@ def get_gesture(roi, bg, num_frames):
         bg = run_avg(gray, aWeight, bg)
     else:
         # segment the hand region
+        bg = cv2.resize(bg, (gray.shape[-1], gray.shape[0]), interpolation=cv2.INTER_CUBIC)
         hand = segment(gray, bg)
 
         # check whether hand region is segmented
@@ -68,9 +69,10 @@ def get_gesture(roi, bg, num_frames):
             (thresholded, segmented, bg) = hand
 
             # draw the segmented region and display the frame
-            cv2.drawContours(clone, [segmented + (right, top)], -1, (0, 0, 255))
+            # cv2.drawContours(clone, [segmented + (right, top)], -1, (0, 0, 255))
+            cv2.drawContours(roi, segmented, -1, (0, 0, 255), 3)
     num_frames += 1
-    return thresholded, bg, num_frames
+    return roi, bg, num_frames
 
 
 
