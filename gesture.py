@@ -22,6 +22,7 @@ def run_avg(image, aWeight, bg):
         return bg
 
     # compute weighted average, accumulate it and update the background
+    bg = cv2.resize(bg, (image.shape[-1], image.shape[0]), interpolation=cv2.INTER_CUBIC)
     cv2.accumulateWeighted(image, bg, aWeight)
     return bg
 
@@ -68,6 +69,7 @@ def get_gesture(roi, bg, num_frames):
 
             # draw the segmented region and display the frame
             cv2.drawContours(clone, [segmented + (right, top)], -1, (0, 0, 255))
+    num_frames += 1
     return thresholded, bg, num_frames
 
 

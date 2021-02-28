@@ -74,6 +74,12 @@ def paint():
 
                     cropped_img = annotated_image[rect_top_y : (rect_top_y+(rect_bottom_y-rect_top_y)), rect_left_x : (rect_left_x+(rect_right_x-rect_left_x))]
                     thresholded, bkg_img, num_frames = gesture.get_gesture(cropped_img, bkg_img, num_frames)
+                    print(num_frames)
+                    if thresholded != None:
+                        cv2.imshow("a", thresholded)
+
+                    else:
+
 
                     # Print index finger tip coordinates.
                     # print(
@@ -83,8 +89,8 @@ def paint():
                     # )
                     # mp_drawing.draw_landmarks(annotated_image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
 
-                    cv2.rectangle(annotated_image, (rect_left_x, rect_top_y), (rect_right_x, rect_bottom_y), selected_color, thickness)
-                    cv2.imshow("a", thresholded)
+                        cv2.rectangle(annotated_image, (rect_left_x, rect_top_y), (rect_right_x, rect_bottom_y), selected_color, thickness)
+                        cv2.imshow("a", annotated_image)
 
                 for pixel_cords in drawing_list:
                     cv2.circle(annotated_image, (pixel_cords[0], pixel_cords[1]), selected_radius, selected_color,
